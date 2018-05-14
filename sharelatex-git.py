@@ -171,7 +171,7 @@ def ensure_git_repository_started():
 # Add the file to the staged area for commit
 #------------------------------------------------------------------------------
 def commit_add_file(filename):
-    run_cmd('git add {}'.format(filename))
+    run_cmd('git add "{}"'.format(filename))
 
 #------------------------------------------------------------------------------
 # We also commit any possible changes to the gitignore file. The commit message
