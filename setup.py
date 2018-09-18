@@ -6,6 +6,6 @@ setup(
     scripts=['sharelatex-git'],
     install_requires=[
         'requests',
-        'bs4',
+        'beautifulsoup4',
     ],
 )

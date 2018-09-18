@@ -212,12 +212,12 @@ def fetch_updates(url, email, password):
     base_url = extract_base_url(url)
     login_url = "{}/login".format(base_url)
     download_url = "{}/download/zip".format(url)
-    
+
     Logger().log("Downloading files from {}...".format(download_url))
 
     try:
         session = requests.Session()
-        
+
         if email is not None:
             if password is None:
                 password = getpass.getpass("Enter password: ")
@@ -228,15 +228,15 @@ def fetch_updates(url, email, password):
 
         r = session.get(download_url, stream=True)
         with open(file_name, 'wb') as f:
-            for chunk in r.iter_content(chunk_size=1024): 
+            for chunk in r.iter_content(chunk_size=1024):
                 if chunk:
                     f.write(chunk)
     except:
         Logger().fatal_error('Could not retrieve files. Perhaps a temporary network failure? Invalid id?')
         return # Never reached. Here to calm down static analysis
-    
+
     Logger().log("Decompressing files...")
-    
+
     try:
         with ZipFile(file_name, 'r') as f:
             f.extractall()
@@ -254,9 +254,9 @@ def fetch_updates(url, email, password):
         return BeautifulSoup(r.text, 'html.parser').find('title').text.rsplit('-',1)[0].strip()
     except:
         return None
-    
+
 #------------------------------------------------------------------------------
-# Handles old-style .sharelatex-git files, which only contain single ids of 
+# Handles old-style .sharelatex-git files, which only contain single ids of
 # projects stored in www.sharelatex.com
 #------------------------------------------------------------------------------
 def read_old_style_saved_config_value(key):
@@ -357,7 +357,7 @@ def go(url, email, password, message, push, dont_commit):
 
     if url is None:
         Logger().fatal_error('No url supplied! See (-h) for usage.')
-    
+
     ensure_git_repository_started()
     ensure_gitignore_is_fine()
     project_title=fetch_updates(url, email, password)
